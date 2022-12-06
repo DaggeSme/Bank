@@ -43,11 +43,9 @@ namespace Bank
         }
         static void CreateUser(string Name, string Pass)
         {
-            
+
             string NewUserId = GuidGenerator();
             string path = "Users.xml";
-            Debug.WriteLine("===============");
-            Debug.WriteLine(File.Exists(path));
             if (!File.Exists(path))
             {
                 File.AppendAllText(path, "<root>\r\n</root>");
@@ -72,7 +70,26 @@ namespace Bank
                 File.AppendAllText(NewUserId + "/" + "konton.xml", "<root>\r\n</root>");
             }
         }
-
+        static void CreateAccount(string Name, string User_id)
+        {
+            string NewAccountId = GuidGenerator();
+            string path = User_id + "/" + "konton.xml";
+            if (!File.Exists(path))
+            {
+                File.AppendAllText(path, "<root>\r\n</root>");
+            }
+            XmlDocument doc = new XmlDocument();
+            doc.Load(path);
+            XmlElement root = doc.CreateElement("Accont");
+            XmlElement account_id = doc.CreateElement("Account_id");
+            XmlElement name = doc.CreateElement("name");
+            account_id.InnerText = NewAccountId;
+            name.InnerText = Name;
+            root.AppendChild(account_id);
+            root.AppendChild(name);
+            doc.DocumentElement.AppendChild(root);
+            doc.Save(path);
+        }
         public static void ReadUsers()
         {
             try
@@ -86,6 +103,19 @@ namespace Bank
             {
             }
             
+        }
+        public static void ReadAccounts()
+        {
+            try
+            {
+                //Create list to load data in to progam for .xml file
+                User.Account_id = new List<string>(XDocument.Load("Users.xml").Descendants("User").Descendants("User_id").Select(element => element.Value).ToArray());
+                User.Account_name = new List<string>(XDocument.Load("Users.xml").Descendants("User").Descendants("name").Select(element => element.Value).ToArray());
+            }
+            catch
+            {
+            }
+
         }
         private void button1_Click(object sender, EventArgs e)
         {
@@ -105,6 +135,13 @@ namespace Bank
         private void button2_Click(object sender, EventArgs e)
         {
             KontonPanel.BringToFront();
+            ReadAccounts();
+            foreach (string item in User.Account_name)
+            {
+                AccountSelector.Items.Add(item);
+            }
+            
+
         }
 
         private void KontonPanel_Paint(object sender, PaintEventArgs e)
@@ -123,6 +160,8 @@ namespace Bank
             //Check if the user name and password is correct when login in button is pressed.
             if (User.Name.Contains(LoginName.Text) && User.Password[User.Name.IndexOf(LoginName.Text)].Contains(LoginPassword.Text))
             {
+                //If the user name and password is correct the user is logged in and the user id is saved in a static variable.
+                User.CurrentUser_id = User.User_id[User.Name.IndexOf(LoginName.Text)];
                 //Show navigation buttons and startpanel
                 StartPanel.BringToFront();
                 button1.Visible = true;
@@ -141,6 +180,9 @@ namespace Bank
             public static List<string> User_id = new();
             public static List<string> Name = new();
             public static List<string> Password = new();
+            public static string CurrentUser_id = "";
+            public static List<string> Account_id = new();
+            public static List<string> Account_name = new();
 
         }
 
@@ -189,6 +231,41 @@ namespace Bank
         }
 
         private void btnCreate_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void BtnCreateAccount_Click(object sender, EventArgs e)
+        {
+            AccountCreatePopup popup = new AccountCreatePopup();
+            DialogResult dialogresult = popup.ShowDialog();
+            popup.Dispose();
+            Debug.WriteLine(!User.Account_name.Contains(popup.AccountName.Text));
+            ReadAccounts();
+            if (dialogresult == DialogResult.OK)
+            {
+                if (User.Account_name.Contains(popup.AccountName.Text))
+                {
+                    MessageBox.Show("Detta namnet är redan använt! \nVar god välj ett annat namn!\n", "Upptaget!",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    try
+                    {
+                        CreateAccount(popup.AccountName.Text, User.CurrentUser_id);
+                        MessageBox.Show("Tack!\nDitt konto har nu blitit skapat!", "Lyckades!");
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Ett oväntat fel har uppstått", "FEL!",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        private void AccountSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

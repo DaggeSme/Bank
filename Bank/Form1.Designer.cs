@@ -36,6 +36,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.KontonPanel = new System.Windows.Forms.Panel();
+            this.AccountSelector = new System.Windows.Forms.ComboBox();
+            this.BtnCreateAccount = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.btnCreate = new System.Windows.Forms.Panel();
             this.button4 = new System.Windows.Forms.Button();
@@ -86,7 +88,7 @@
             this.StartPanel.Controls.Add(this.label4);
             this.StartPanel.Controls.Add(this.label2);
             this.StartPanel.Controls.Add(this.label1);
-            this.StartPanel.Location = new System.Drawing.Point(12, 43);
+            this.StartPanel.Location = new System.Drawing.Point(646, 427);
             this.StartPanel.Name = "StartPanel";
             this.StartPanel.Size = new System.Drawing.Size(599, 378);
             this.StartPanel.TabIndex = 3;
@@ -126,12 +128,33 @@
             // 
             // KontonPanel
             // 
+            this.KontonPanel.Controls.Add(this.AccountSelector);
+            this.KontonPanel.Controls.Add(this.BtnCreateAccount);
             this.KontonPanel.Controls.Add(this.label3);
             this.KontonPanel.Location = new System.Drawing.Point(12, 43);
             this.KontonPanel.Name = "KontonPanel";
             this.KontonPanel.Size = new System.Drawing.Size(599, 378);
             this.KontonPanel.TabIndex = 4;
             this.KontonPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.KontonPanel_Paint);
+            // 
+            // AccountSelector
+            // 
+            this.AccountSelector.FormattingEnabled = true;
+            this.AccountSelector.Location = new System.Drawing.Point(314, 51);
+            this.AccountSelector.Name = "AccountSelector";
+            this.AccountSelector.Size = new System.Drawing.Size(104, 23);
+            this.AccountSelector.TabIndex = 8;
+            this.AccountSelector.SelectedIndexChanged += new System.EventHandler(this.AccountSelector_SelectedIndexChanged);
+            // 
+            // BtnCreateAccount
+            // 
+            this.BtnCreateAccount.Location = new System.Drawing.Point(123, 53);
+            this.BtnCreateAccount.Name = "BtnCreateAccount";
+            this.BtnCreateAccount.Size = new System.Drawing.Size(96, 25);
+            this.BtnCreateAccount.TabIndex = 7;
+            this.BtnCreateAccount.Text = "Nytt konto";
+            this.BtnCreateAccount.UseVisualStyleBackColor = true;
+            this.BtnCreateAccount.Click += new System.EventHandler(this.BtnCreateAccount_Click);
             // 
             // label3
             // 
@@ -152,7 +175,7 @@
             this.btnCreate.Controls.Add(this.LoginName);
             this.btnCreate.Controls.Add(this.label6);
             this.btnCreate.Controls.Add(this.label5);
-            this.btnCreate.Location = new System.Drawing.Point(12, 43);
+            this.btnCreate.Location = new System.Drawing.Point(646, 46);
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(599, 375);
             this.btnCreate.TabIndex = 5;
@@ -182,17 +205,17 @@
             // 
             this.LoginPassword.Location = new System.Drawing.Point(34, 122);
             this.LoginPassword.Name = "LoginPassword";
+            this.LoginPassword.PlaceholderText = "Lösenord";
             this.LoginPassword.Size = new System.Drawing.Size(156, 23);
             this.LoginPassword.TabIndex = 3;
-            this.LoginPassword.Text = "Lösenord";
             // 
             // LoginName
             // 
             this.LoginName.Location = new System.Drawing.Point(34, 93);
             this.LoginName.Name = "LoginName";
+            this.LoginName.PlaceholderText = "Namn";
             this.LoginName.Size = new System.Drawing.Size(156, 23);
             this.LoginName.TabIndex = 2;
-            this.LoginName.Text = "Namn";
             // 
             // label6
             // 
@@ -258,5 +281,7 @@
         private Label label6;
         private Label label5;
         private Button button4;
+        private Button BtnCreateAccount;
+        private ComboBox AccountSelector;
     }
 }
