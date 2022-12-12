@@ -28,22 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.Button_Start_Page = new System.Windows.Forms.Button();
+            this.Button_Account_Page = new System.Windows.Forms.Button();
+            this.Button_New_Transaction = new System.Windows.Forms.Button();
             this.StartPanel = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.KontonPanel = new System.Windows.Forms.Panel();
             this.AccountSelector = new System.Windows.Forms.ComboBox();
-            this.BtnCreateAccount = new System.Windows.Forms.Button();
+            this.Button_Create_Bank_Account = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.btnCreate = new System.Windows.Forms.Panel();
-            this.button4 = new System.Windows.Forms.Button();
-            this.btnLogin = new System.Windows.Forms.Button();
-            this.LoginPassword = new System.Windows.Forms.TextBox();
-            this.LoginName = new System.Windows.Forms.TextBox();
+            this.Button_Create_User = new System.Windows.Forms.Button();
+            this.Button_Login = new System.Windows.Forms.Button();
+            this.TextBox_Login_Password = new System.Windows.Forms.TextBox();
+            this.Textbox_Login_Name = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.StartPanel.SuspendLayout();
@@ -51,37 +51,38 @@
             this.btnCreate.SuspendLayout();
             this.SuspendLayout();
             // 
-            // button1
+            // Button_Start_Page
             // 
-            this.button1.Location = new System.Drawing.Point(12, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(96, 25);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Start";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Visible = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.Button_Start_Page.Location = new System.Drawing.Point(12, 12);
+            this.Button_Start_Page.Name = "Button_Start_Page";
+            this.Button_Start_Page.Size = new System.Drawing.Size(96, 25);
+            this.Button_Start_Page.TabIndex = 0;
+            this.Button_Start_Page.Text = "Start";
+            this.Button_Start_Page.UseVisualStyleBackColor = true;
+            this.Button_Start_Page.Visible = false;
+            this.Button_Start_Page.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button2
+            // Button_Account_Page
             // 
-            this.button2.Location = new System.Drawing.Point(114, 12);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(96, 25);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Konton";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Visible = false;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.Button_Account_Page.Location = new System.Drawing.Point(114, 12);
+            this.Button_Account_Page.Name = "Button_Account_Page";
+            this.Button_Account_Page.Size = new System.Drawing.Size(96, 25);
+            this.Button_Account_Page.TabIndex = 1;
+            this.Button_Account_Page.Text = "Konton";
+            this.Button_Account_Page.UseVisualStyleBackColor = true;
+            this.Button_Account_Page.Visible = false;
+            this.Button_Account_Page.Click += new System.EventHandler(this.Button_Account_Page_Click);
             // 
-            // button3
+            // Button_New_Transaction
             // 
-            this.button3.Location = new System.Drawing.Point(215, 12);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(96, 25);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "Ny transaktion";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Visible = false;
+            this.Button_New_Transaction.Location = new System.Drawing.Point(123, 22);
+            this.Button_New_Transaction.Name = "Button_New_Transaction";
+            this.Button_New_Transaction.Size = new System.Drawing.Size(96, 25);
+            this.Button_New_Transaction.TabIndex = 2;
+            this.Button_New_Transaction.Text = "Ny transaktion";
+            this.Button_New_Transaction.UseVisualStyleBackColor = true;
+            this.Button_New_Transaction.Visible = false;
+            this.Button_New_Transaction.Click += new System.EventHandler(this.Button_New_Transaction_Click);
             // 
             // StartPanel
             // 
@@ -124,18 +125,17 @@
             this.label1.Size = new System.Drawing.Size(247, 30);
             this.label1.TabIndex = 0;
             this.label1.Text = "Välkommen till din bank! \r\n";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // KontonPanel
             // 
             this.KontonPanel.Controls.Add(this.AccountSelector);
-            this.KontonPanel.Controls.Add(this.BtnCreateAccount);
+            this.KontonPanel.Controls.Add(this.Button_Create_Bank_Account);
+            this.KontonPanel.Controls.Add(this.Button_New_Transaction);
             this.KontonPanel.Controls.Add(this.label3);
             this.KontonPanel.Location = new System.Drawing.Point(12, 43);
             this.KontonPanel.Name = "KontonPanel";
             this.KontonPanel.Size = new System.Drawing.Size(599, 378);
             this.KontonPanel.TabIndex = 4;
-            this.KontonPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.KontonPanel_Paint);
             // 
             // AccountSelector
             // 
@@ -144,17 +144,16 @@
             this.AccountSelector.Name = "AccountSelector";
             this.AccountSelector.Size = new System.Drawing.Size(104, 23);
             this.AccountSelector.TabIndex = 8;
-            this.AccountSelector.SelectedIndexChanged += new System.EventHandler(this.AccountSelector_SelectedIndexChanged);
             // 
-            // BtnCreateAccount
+            // Button_Create_Bank_Account
             // 
-            this.BtnCreateAccount.Location = new System.Drawing.Point(123, 53);
-            this.BtnCreateAccount.Name = "BtnCreateAccount";
-            this.BtnCreateAccount.Size = new System.Drawing.Size(96, 25);
-            this.BtnCreateAccount.TabIndex = 7;
-            this.BtnCreateAccount.Text = "Nytt konto";
-            this.BtnCreateAccount.UseVisualStyleBackColor = true;
-            this.BtnCreateAccount.Click += new System.EventHandler(this.BtnCreateAccount_Click);
+            this.Button_Create_Bank_Account.Location = new System.Drawing.Point(123, 53);
+            this.Button_Create_Bank_Account.Name = "Button_Create_Bank_Account";
+            this.Button_Create_Bank_Account.Size = new System.Drawing.Size(96, 25);
+            this.Button_Create_Bank_Account.TabIndex = 7;
+            this.Button_Create_Bank_Account.Text = "Nytt konto";
+            this.Button_Create_Bank_Account.UseVisualStyleBackColor = true;
+            this.Button_Create_Bank_Account.Click += new System.EventHandler(this.Button_Create_Bank_Account_Click);
             // 
             // label3
             // 
@@ -165,57 +164,55 @@
             this.label3.Size = new System.Drawing.Size(73, 25);
             this.label3.TabIndex = 0;
             this.label3.Text = "Konton";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // btnCreate
             // 
-            this.btnCreate.Controls.Add(this.button4);
-            this.btnCreate.Controls.Add(this.btnLogin);
-            this.btnCreate.Controls.Add(this.LoginPassword);
-            this.btnCreate.Controls.Add(this.LoginName);
+            this.btnCreate.Controls.Add(this.Button_Create_User);
+            this.btnCreate.Controls.Add(this.Button_Login);
+            this.btnCreate.Controls.Add(this.TextBox_Login_Password);
+            this.btnCreate.Controls.Add(this.Textbox_Login_Name);
             this.btnCreate.Controls.Add(this.label6);
             this.btnCreate.Controls.Add(this.label5);
             this.btnCreate.Location = new System.Drawing.Point(646, 46);
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(599, 375);
             this.btnCreate.TabIndex = 5;
-            this.btnCreate.Paint += new System.Windows.Forms.PaintEventHandler(this.btnCreate_Paint);
             // 
-            // button4
+            // Button_Create_User
             // 
-            this.button4.Location = new System.Drawing.Point(34, 182);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(96, 25);
-            this.button4.TabIndex = 7;
-            this.button4.Text = "Skapa konto";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click_2);
+            this.Button_Create_User.Location = new System.Drawing.Point(34, 182);
+            this.Button_Create_User.Name = "Button_Create_User";
+            this.Button_Create_User.Size = new System.Drawing.Size(96, 25);
+            this.Button_Create_User.TabIndex = 7;
+            this.Button_Create_User.Text = "Skapa konto";
+            this.Button_Create_User.UseVisualStyleBackColor = true;
+            this.Button_Create_User.Click += new System.EventHandler(this.Button_Create_User_Click_2);
             // 
-            // btnLogin
+            // Button_Login
             // 
-            this.btnLogin.Location = new System.Drawing.Point(34, 151);
-            this.btnLogin.Name = "btnLogin";
-            this.btnLogin.Size = new System.Drawing.Size(96, 25);
-            this.btnLogin.TabIndex = 6;
-            this.btnLogin.Text = "Logga in";
-            this.btnLogin.UseVisualStyleBackColor = true;
-            this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
+            this.Button_Login.Location = new System.Drawing.Point(34, 151);
+            this.Button_Login.Name = "Button_Login";
+            this.Button_Login.Size = new System.Drawing.Size(96, 25);
+            this.Button_Login.TabIndex = 6;
+            this.Button_Login.Text = "Logga in";
+            this.Button_Login.UseVisualStyleBackColor = true;
+            this.Button_Login.Click += new System.EventHandler(this.Button_Login_Click);
             // 
-            // LoginPassword
+            // TextBox_Login_Password
             // 
-            this.LoginPassword.Location = new System.Drawing.Point(34, 122);
-            this.LoginPassword.Name = "LoginPassword";
-            this.LoginPassword.PlaceholderText = "Lösenord";
-            this.LoginPassword.Size = new System.Drawing.Size(156, 23);
-            this.LoginPassword.TabIndex = 3;
+            this.TextBox_Login_Password.Location = new System.Drawing.Point(34, 122);
+            this.TextBox_Login_Password.Name = "TextBox_Login_Password";
+            this.TextBox_Login_Password.PlaceholderText = "Lösenord";
+            this.TextBox_Login_Password.Size = new System.Drawing.Size(156, 23);
+            this.TextBox_Login_Password.TabIndex = 3;
             // 
-            // LoginName
+            // Textbox_Login_Name
             // 
-            this.LoginName.Location = new System.Drawing.Point(34, 93);
-            this.LoginName.Name = "LoginName";
-            this.LoginName.PlaceholderText = "Namn";
-            this.LoginName.Size = new System.Drawing.Size(156, 23);
-            this.LoginName.TabIndex = 2;
+            this.Textbox_Login_Name.Location = new System.Drawing.Point(34, 93);
+            this.Textbox_Login_Name.Name = "Textbox_Login_Name";
+            this.Textbox_Login_Name.PlaceholderText = "Namn";
+            this.Textbox_Login_Name.Size = new System.Drawing.Size(156, 23);
+            this.Textbox_Login_Name.TabIndex = 2;
             // 
             // label6
             // 
@@ -226,7 +223,6 @@
             this.label6.Size = new System.Drawing.Size(268, 21);
             this.label6.TabIndex = 1;
             this.label6.Text = "Var god logga in eller skapa ett konto";
-            this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
             // label5
             // 
@@ -245,14 +241,12 @@
             this.ClientSize = new System.Drawing.Size(1257, 744);
             this.Controls.Add(this.btnCreate);
             this.Controls.Add(this.StartPanel);
-            this.Controls.Add(this.button3);
             this.Controls.Add(this.KontonPanel);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.Button_Start_Page);
+            this.Controls.Add(this.Button_Account_Page);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";
             this.Text = "Bank";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.StartPanel.ResumeLayout(false);
             this.StartPanel.PerformLayout();
             this.KontonPanel.ResumeLayout(false);
@@ -265,9 +259,9 @@
 
         #endregion
 
-        private Button button1;
-        private Button button2;
-        private Button button3;
+        private Button Button_Start_Page;
+        private Button Button_Account_Page;
+        private Button Button_New_Transaction;
         private Panel StartPanel;
         private Label label2;
         private Label label1;
@@ -275,13 +269,13 @@
         private Label label3;
         private Label label4;
         private Panel btnCreate;
-        private Button btnLogin;
-        private TextBox LoginPassword;
-        private TextBox LoginName;
+        private Button Button_Login;
+        private TextBox TextBox_Login_Password;
+        private TextBox Textbox_Login_Name;
         private Label label6;
         private Label label5;
-        private Button button4;
-        private Button BtnCreateAccount;
+        private Button Button_Create_User;
+        private Button Button_Create_Bank_Account;
         private ComboBox AccountSelector;
     }
 }
