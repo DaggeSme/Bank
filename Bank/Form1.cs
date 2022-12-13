@@ -14,7 +14,136 @@ namespace Bank
         {
             InitializeComponent();
         }
-        static string GuidGenerator()
+        
+        private void button1_Click(object sender, EventArgs e)
+        {
+            StartPanel.BringToFront();
+
+        }
+
+        private void Button_Account_Page_Click(object sender, EventArgs e)
+        {
+            KontonPanel.BringToFront();
+            Utility.ReadBankAccount(User.Current_User_Id);
+            AccountSelector.Items.Clear();
+            foreach (string item in User.Current_Bank_Account_Name)
+            {
+                AccountSelector.Items.Add(item);
+            }
+        }
+
+        private void Button_Login_Click(object sender, EventArgs e)
+        {
+            Utility.ReadUsers();
+            //Check if the user name and password is correct when login in button is pressed.
+            if (User.Global_User_Name.Contains(Textbox_Login_Name.Text) && User.Global_User_Password[User.Global_User_Name.IndexOf(Textbox_Login_Name.Text)].Contains(TextBox_Login_Password.Text))
+            {
+                //If the user name and password is correct the user is logged in and the user id is saved in a static variable.
+                User.Current_User_Id = User.Global_User_Id[User.Global_User_Name.IndexOf(Textbox_Login_Name.Text)];
+                //Show navigation buttons and startpanel
+                StartPanel.BringToFront();
+                Button_Start_Page.Visible = true;
+                Button_Account_Page.Visible = true;
+                Button_New_Transaction.Visible = true;
+            }
+            else
+            {
+                MessageBox.Show("Du angav Fel lösenord eller Namn!", "Fel!");
+            }      
+        }
+        
+        private void Button_Create_User_Click_2(object sender, EventArgs e)
+        {
+            Utility.ReadUsers();
+            if (User.Global_User_Name.Contains(Textbox_Login_Name.Text))
+            {
+                MessageBox.Show("Detta namnet är redan använt! \nVar god välj ett annat namn!\n", "Upptaget!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+            else
+            {
+                try
+                {
+                    Utility.CreateUser(Textbox_Login_Name.Text, TextBox_Login_Password.Text);
+                    MessageBox.Show("Tack!\nDitt konto har nu blitit skapat!", "Lyckades!");
+                    StartPanel.BringToFront();
+                    Button_Start_Page.Visible = true;
+                    Button_Account_Page.Visible = true;
+                    Button_New_Transaction.Visible = true;
+                }
+                catch 
+                {
+                    MessageBox.Show("Ett oväntat fel har uppstått", "FEL!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void Button_Create_Bank_Account_Click(object sender, EventArgs e)
+        {
+            AccountCreatePopup popup = new AccountCreatePopup();
+            DialogResult dialogresult = popup.ShowDialog();
+            popup.Dispose();
+            Utility.ReadBankAccount(User.Current_User_Id);
+            if (dialogresult == DialogResult.OK)
+            {
+                if (User.Current_Bank_Account_Name.Contains(popup.AccountName.Text))
+                {
+                    MessageBox.Show("Detta namnet är redan använt! \nVar god välj ett annat namn!\n", "Upptaget!",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    try
+                    {
+                        Utility.CreateBankAccount(popup.AccountName.Text);
+                        MessageBox.Show("Tack!\nDitt bank konto har nu blitit skapat!", "Lyckades!");
+                        Utility.ReadBankAccount(User.Current_User_Id);
+                        AccountSelector.Items.Clear();
+                        foreach (string item in User.Current_Bank_Account_Name)
+                        {
+                            AccountSelector.Items.Add(item);
+                        }
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Ett oväntat fel har uppstått", "FEL!",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        private void Button_New_Transaction_Click(object sender, EventArgs e)
+        {
+            Utility.ReadBankAccount(User.Current_User_Id);
+            NewTransactionPopup popup = new NewTransactionPopup();
+            DialogResult dialogresult = popup.ShowDialog();
+            popup.Dispose();
+            
+            if (dialogresult == DialogResult.OK)
+            {
+                //Moeny // From // To
+                Utility.CreateTransaction(Convert.ToDouble(popup.Textbox_Amount.Text), User.Current_Bank_Account_Id[User.Current_Bank_Account_Name.IndexOf(popup.Dropdown_From_Account.Text)], popup.Dropdown_To_Account.Text);
+                
+            }
+        }
+    }
+    public class User
+    {
+        public static List<string> Global_User_Id = new();
+        public static List<string> Global_User_Name = new();
+        public static List<string> Global_User_Password = new();
+        public static string Current_User_Id = "";
+        public static List<string> Global_Bank_Account_Id = new();
+        public static List<string> Global_Bank_Account_User_Id = new();
+        public static List<string> Current_Bank_Account_Id = new();
+        public static List<string> Current_Bank_Account_Name = new();
+    }
+    public class Utility
+    {
+        public static string GuidGenerator()
         {
             //Create the list
             List<string> Guids = new();
@@ -41,7 +170,7 @@ namespace Bank
             //After everything is done return the newly generated Guid.
             return (newGuid);
         }
-        static void CreateUser(string Name, string Pass)
+        public static void CreateUser(string Name, string Pass)
         {
             Directory.CreateDirectory("Data");
             string NewUserId = GuidGenerator();
@@ -65,15 +194,15 @@ namespace Bank
             root.AppendChild(password);
             doc.DocumentElement.AppendChild(root);
             doc.Save(path);
-            Directory.CreateDirectory("Data/User/" + NewUserId);
-            if (!File.Exists("Data/User/" + NewUserId + "/Bank-Accounts.xml"))
+            Directory.CreateDirectory("Data/Users/" + NewUserId);
+            if (!File.Exists("Data/Users/" + NewUserId + "/Bank-Accounts.xml"))
             {
-                File.AppendAllText("Data/User/" + NewUserId + "/Bank-Accounts.xml", "<root>\r\n</root>");
+                File.AppendAllText("Data/Users/" + NewUserId + "/Bank-Accounts.xml", "<root>\r\n</root>");
             }
         }
-        static void CreateBankAccount(string Name)
+        public static void CreateBankAccount(string Name)
         {
-            
+
             string New_Bank_Account_Id = GuidGenerator();
 
             //Save new Bank account to global file
@@ -99,8 +228,7 @@ namespace Bank
 
             //Save new bank account to user file
             //Save Account name and id
-            path = "Data/User/" + User.Current_User_Id + "/Bank-Accounts.xml";
-            Debug.WriteLine(User.Current_User_Id);
+            path = "Data/Users/" + User.Current_User_Id + "/Bank-Accounts.xml";
             if (!File.Exists(path))
             {
                 File.AppendAllText(path, "<root>\r\n</root>");
@@ -124,10 +252,10 @@ namespace Bank
                 User.Global_User_Name = new List<string>(XDocument.Load(path).Descendants("User").Descendants("Name").Select(element => element.Value).ToArray());
                 User.Global_User_Password = new List<string>(XDocument.Load(path).Descendants("User").Descendants("Password").Select(element => element.Value).ToArray());
             }
-            catch 
+            catch
             {
             }
-            
+
         }
         public static void ReadBankAccount(string user)
         {
@@ -145,8 +273,8 @@ namespace Bank
                     string path = "Data/Global-Bank-Accounts.xml";
                     User.Global_Bank_Account_Id = new List<string>(XDocument.Load(path).Descendants("Account").Descendants("Bank_Account_Id").Select(element => element.Value).ToArray());
                     User.Global_Bank_Account_User_Id = new List<string>(XDocument.Load(path).Descendants("Account").Descendants("User_Id").Select(element => element.Value).ToArray());
-                    path = "Data/User/" + User.Current_User_Id + "/Bank-Accounts.xml";
-                    User.Current_Bank_Account_Id = new List<string>(XDocument.Load(path).Descendants("Account").Descendants("Account_Id").Select(element => element.Value).ToArray());
+                    path = "Data/Users/" + User.Current_User_Id + "/Bank-Accounts.xml";
+                    User.Current_Bank_Account_Id = new List<string>(XDocument.Load(path).Descendants("Account").Descendants("Bank_Account_Id").Select(element => element.Value).ToArray());
                     User.Current_Bank_Account_Name = new List<string>(XDocument.Load(path).Descendants("Account").Descendants("Name").Select(element => element.Value).ToArray());
                 }
             }
@@ -155,14 +283,13 @@ namespace Bank
             }
 
         }
-        static void CreateTransaction(double Money, string from_id, string to_id)
+        public static void CreateTransaction(double Money, string from_id, string to_id)
         {
             string New_Transaction_Id = GuidGenerator();
             //Begin with removing money form fist account
             //Find out what path is using user id form global accounts file
             ReadBankAccount("Global");
             string path = "Data/Users/" + User.Global_Bank_Account_User_Id[User.Global_Bank_Account_Id.IndexOf(from_id)] + "/" + from_id + ".xml";
-            //string path = from_id + ".xml";
             if (!File.Exists(path))
             {
                 File.AppendAllText(path, "<root>\r\n</root>");
@@ -205,152 +332,9 @@ namespace Bank
             doc.DocumentElement.AppendChild(root);
             doc.Save(path);
         }
-        private void button1_Click(object sender, EventArgs e)
+        public static void Transactions(string Bank_Account_Id)
         {
-            StartPanel.BringToFront();
 
         }
-
-        private void Button_Account_Page_Click(object sender, EventArgs e)
-        {
-            KontonPanel.BringToFront();
-            ReadBankAccount(User.Current_User_Id);
-            AccountSelector.Items.Clear();
-            foreach (string item in User.Current_Bank_Account_Name)
-            {
-                AccountSelector.Items.Add(item);
-            }
-        }
-
-        private void Button_Login_Click(object sender, EventArgs e)
-        {
-            ReadUsers();
-            //Check if the user name and password is correct when login in button is pressed.
-            if (User.Global_User_Name.Contains(Textbox_Login_Name.Text) && User.Global_User_Password[User.Global_User_Name.IndexOf(Textbox_Login_Name.Text)].Contains(TextBox_Login_Password.Text))
-            {
-                //If the user name and password is correct the user is logged in and the user id is saved in a static variable.
-                User.Current_User_Id = User.Global_User_Id[User.Global_User_Name.IndexOf(Textbox_Login_Name.Text)];
-                //Show navigation buttons and startpanel
-                StartPanel.BringToFront();
-                Button_Start_Page.Visible = true;
-                Button_Account_Page.Visible = true;
-                Button_New_Transaction.Visible = true;
-            }
-            else
-            {
-                MessageBox.Show("Du angav Fel lösenord eller Namn!", "Fel!");
-            }      
-        }
-        
-
-        private void Button_Create_User_Click_2(object sender, EventArgs e)
-        {
-            ReadUsers();
-            if (User.Global_User_Name.Contains(Textbox_Login_Name.Text))
-            {
-                MessageBox.Show("Detta namnet är redan använt! \nVar god välj ett annat namn!\n", "Upptaget!",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-            }
-            else
-            {
-                try
-                {
-                    CreateUser(Textbox_Login_Name.Text, TextBox_Login_Password.Text);
-                    MessageBox.Show("Tack!\nDitt konto har nu blitit skapat!", "Lyckades!");
-                    StartPanel.BringToFront();
-                    Button_Start_Page.Visible = true;
-                    Button_Account_Page.Visible = true;
-                    Button_New_Transaction.Visible = true;
-                }
-                catch 
-                {
-                    MessageBox.Show("Ett oväntat fel har uppstått", "FEL!",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-
-        private void Button_Create_Bank_Account_Click(object sender, EventArgs e)
-        {
-            AccountCreatePopup popup = new AccountCreatePopup();
-            DialogResult dialogresult = popup.ShowDialog();
-            popup.Dispose();
-            ReadBankAccount(User.Current_User_Id);
-            if (dialogresult == DialogResult.OK)
-            {
-                if (User.Current_Bank_Account_Name.Contains(popup.AccountName.Text))
-                {
-                    MessageBox.Show("Detta namnet är redan använt! \nVar god välj ett annat namn!\n", "Upptaget!",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else
-                {
-                    try
-                    {
-                        CreateBankAccount(popup.AccountName.Text);
-                        MessageBox.Show("Tack!\nDitt bank konto har nu blitit skapat!", "Lyckades!");
-                        ReadBankAccount(User.Current_User_Id);
-                        AccountSelector.Items.Clear();
-                        foreach (string item in User.Current_Bank_Account_Name)
-                        {
-                            AccountSelector.Items.Add(item);
-                        }
-                    }
-                    catch
-                    {
-                        MessageBox.Show("Ett oväntat fel har uppstått", "FEL!",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-            }
-        }
-
-        private void Button_New_Transaction_Click(object sender, EventArgs e)
-        {
-            NewTransactionPopup popup = new NewTransactionPopup();
-            DialogResult dialogresult = popup.ShowDialog();
-            popup.Dispose();
-
-
-            //Put in a utility class to acces it from diffrent forms (The method of ReadBankAccount)
-            ReadBankAccount(User.Current_User_Id);
-            popup.Dropdown_From_Account.Items.Clear();
-            foreach (string items in User.Current_Bank_Account_Name)
-            {
-                Debug.WriteLine(items);
-                popup.Dropdown_To_Account.Items.Add(items);
-            }
-            foreach (string items in User.Global_Bank_Account_Id)
-            {
-                Debug.WriteLine(items);
-                popup.Dropdown_To_Account.Items.Add(items);
-            }
-
-
-
-            if (dialogresult == DialogResult.OK)
-            {
-                //Moeny // From // To
-                CreateTransaction(Convert.ToDouble(popup.Textbox_Amount.Text), popup.Dropdown_From_Account.Text, popup.Dropdown_To_Account.Text);
-                Debug.WriteLine(popup.Textbox_Amount.Text);
-                Debug.WriteLine(popup.Dropdown_From_Account.Text);
-                Debug.WriteLine(popup.Dropdown_To_Account.Text);
-                
-            }
-        }
-    }
-    public class User
-    {
-        public static List<string> Global_User_Id = new();
-        public static List<string> Global_User_Name = new();
-        public static List<string> Global_User_Password = new();
-        public static string Current_User_Id = "";
-        public static List<string> Global_Bank_Account_Id = new();
-        public static List<string> Global_Bank_Account_User_Id = new();
-        public static List<string> Current_Bank_Account_Id = new();
-        public static List<string> Current_Bank_Account_Name = new();
-
     }
 }

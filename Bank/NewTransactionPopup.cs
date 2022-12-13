@@ -31,6 +31,15 @@ namespace Bank
         private void NewTransactionPopup_Load(object sender, EventArgs e)
         {
             
+            Dropdown_From_Account.Items.Clear();
+            foreach (string items in User.Current_Bank_Account_Name)
+            {
+                Dropdown_From_Account.Items.Add(items);
+            }
+            foreach (string items in User.Global_Bank_Account_Id)
+            {
+                Dropdown_To_Account.Items.Add(items);
+            }
         }
     }
 }
