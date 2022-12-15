@@ -124,10 +124,44 @@ namespace Bank
             
             if (dialogresult == DialogResult.OK)
             {
+                //Switch form using try to using if to see what method should be used!
                 //Moeny // From // To
-                Utility.CreateTransaction(Convert.ToDouble(popup.Textbox_Amount.Text), User.Current_Bank_Account_Id[User.Current_Bank_Account_Name.IndexOf(popup.Dropdown_From_Account.Text)], popup.Dropdown_To_Account.Text);
-                
+                if (User.Current_Bank_Account_Name.Contains(popup.Dropdown_To_Account.Text))
+                {
+                    Utility.CreateTransaction(Convert.ToDouble(popup.Textbox_Amount.Text), User.Current_Bank_Account_Id[User.Current_Bank_Account_Name.IndexOf(popup.Dropdown_From_Account.Text)], User.Current_Bank_Account_Id[User.Current_Bank_Account_Name.IndexOf(popup.Dropdown_To_Account.Text)]);
+                }
+                else
+                {
+                    Utility.CreateTransaction(Convert.ToDouble(popup.Textbox_Amount.Text), User.Current_Bank_Account_Id[User.Current_Bank_Account_Name.IndexOf(popup.Dropdown_From_Account.Text)], popup.Dropdown_To_Account.Text);
+                }
             }
+        }
+
+        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            Utility.ReadTransactions("d37e16b0-76db-42a7-a808-43c8f3df7dc3");
+            foreach (double item in Account.Balance)
+            {
+
+                Debug.WriteLine(item);
+            }
+        }
+
+        private void AccountSelector_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            dataGridView1.Rows.Clear();
+            Utility.ReadBankAccount(User.Current_User_Id);
+            Utility.ReadTransactions(User.Current_Bank_Account_Id[User.Current_Bank_Account_Name.IndexOf(AccountSelector.Text)]);
+            for (int i = 0; i <= Account.Balance.Count - 1; i++)
+            {
+                dataGridView1.Rows.Add(Account.Date[i], Account.Amount[i], Account.Location[i], Account.Balance[i]);
+            }
+            dataGridView1.Update();
         }
     }
     public class User
@@ -140,6 +174,15 @@ namespace Bank
         public static List<string> Global_Bank_Account_User_Id = new();
         public static List<string> Current_Bank_Account_Id = new();
         public static List<string> Current_Bank_Account_Name = new();
+    }
+    public class Account
+    {
+        //Show date, amount, current balance, destination/source
+        public static List<string> Date = new();
+        public static List<string> Amount= new();
+        public static List<double> Balance= new();
+        public static List<string> Location = new();
+        public static List<string> Direction = new();
     }
     public class Utility
     {
@@ -244,6 +287,9 @@ namespace Bank
         }
         public static void ReadUsers()
         {
+            User.Global_User_Id.Clear();    
+            User.Global_User_Name.Clear();
+            User.Global_User_Password.Clear();
             string path = "Data/Users.xml";
             try
             {
@@ -259,6 +305,10 @@ namespace Bank
         }
         public static void ReadBankAccount(string user)
         {
+            User.Global_Bank_Account_Id.Clear();
+            User.Global_Bank_Account_User_Id.Clear();
+            User.Current_Bank_Account_Id.Clear();
+            User.Current_Bank_Account_Name.Clear();
             try
             {
                 //Create list to load data in to progam for .xml file
@@ -288,6 +338,8 @@ namespace Bank
             string New_Transaction_Id = GuidGenerator();
             //Begin with removing money form fist account
             //Find out what path is using user id form global accounts file
+            string Date = Convert.ToString(DateTime.Now);
+
             ReadBankAccount("Global");
             string path = "Data/Users/" + User.Global_Bank_Account_User_Id[User.Global_Bank_Account_Id.IndexOf(from_id)] + "/" + from_id + ".xml";
             if (!File.Exists(path))
@@ -300,41 +352,79 @@ namespace Bank
             XmlElement Transaction_Id = doc.CreateElement("Transaction_id");
             XmlElement Direction = doc.CreateElement("Direction");
             XmlElement Amount = doc.CreateElement("Amount");
-            XmlElement Destination = doc.CreateElement("Destination");
+            XmlElement Location = doc.CreateElement("Location");
+            XmlElement date = doc.CreateElement("Date");
             Transaction_Id.InnerText = New_Transaction_Id;
             Direction.InnerText = "Out";
             Amount.InnerText = Convert.ToString(Money);
-            Destination.InnerText = to_id;
+            Location.InnerText = to_id;
+            date.InnerText= Date;
             root.AppendChild(Transaction_Id);
             root.AppendChild(Direction);
             root.AppendChild(Amount);
-            root.AppendChild(Destination);
+            root.AppendChild(Location);
+            root.AppendChild(date);
             doc.DocumentElement.AppendChild(root);
             doc.Save(path);
             //Then add money to destination
-
+            Debug.WriteLine(to_id);
             path = "Data/Users/" + User.Global_Bank_Account_User_Id[User.Global_Bank_Account_Id.IndexOf(to_id)] + "/" + to_id + ".xml";
             if (!File.Exists(path))
             {
                 File.AppendAllText(path, "<root>\r\n</root>");
             }
             doc.Load(path);
-            XmlElement Source = doc.CreateElement("Source");
             Transaction_Id.InnerText = New_Transaction_Id;
             Direction.InnerText = "In";
             Amount.InnerText = Convert.ToString(Money);
-            Source.InnerText = from_id;
+            Location.InnerText = from_id;
             root.AppendChild(Transaction_Id);
             root.AppendChild(Direction);
             root.AppendChild(Amount);
-            root.AppendChild(Destination);
-            root.AppendChild(Source);
+            root.AppendChild(Location);
             doc.DocumentElement.AppendChild(root);
             doc.Save(path);
         }
-        public static void Transactions(string Bank_Account_Id)
+        public static void ReadTransactions(string Bank_Account_Id)
         {
+            Account.Date.Clear();
+            Account.Amount.Clear();
+            Account.Location.Clear();
+            Account.Direction.Clear();
+            Account.Balance.Clear();
+            //Show date, amount, current balance, destination/source
+            string path = "Data/Users/" + User.Current_User_Id + "/" + Bank_Account_Id + ".xml";
+            Account.Date = new List<string>(XDocument.Load(path).Descendants("Transaction").Descendants("Date").Select(element => element.Value).ToArray());
+            Account.Amount = new List<string>(XDocument.Load(path).Descendants("Transaction").Descendants("Amount").Select(element => element.Value).ToArray());
+            Account.Direction = new List<string>(XDocument.Load(path).Descendants("Transaction").Descendants("Direction").Select(element => element.Value).ToArray());
+            for (int i = 0; i <= Account.Amount.Count - 1; i++)
+            {
+                double tempsum = 1000;
+                for (int j = 0; j <= i; j++)
+                {
+                    if (Convert.ToString(Account.Direction[j]) == "In")
+                        tempsum += Convert.ToDouble(Account.Amount[j]);
+                    else
+                        tempsum -= Convert.ToDouble(Account.Amount[j]);
+                }
+                Account.Balance.Add(tempsum);
+            }
+            Debug.WriteLine("Done doing Balance!");
+            for (int x = 0; x <= Account.Amount.Count - 1; x++)
+            {
+                if (Account.Direction[x] == "In")
+                {
+                    Account.Amount[x] = "+" + Account.Amount[x];
+                }
+                else
+                {
+                    Account.Amount[x] = "-" + Account.Amount[x];
+                }
+            }
+            Debug.WriteLine("Done doing Amount!");
 
+
+            Account.Location = new List<string>(XDocument.Load(path).Descendants("Transaction").Descendants("Location").Select(element => element.Value).ToArray());
         }
     }
 }

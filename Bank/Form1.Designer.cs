@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.Button_Start_Page = new System.Windows.Forms.Button();
             this.Button_Account_Page = new System.Windows.Forms.Button();
             this.Button_New_Transaction = new System.Windows.Forms.Button();
@@ -36,9 +37,16 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.KontonPanel = new System.Windows.Forms.Panel();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.test = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.button1 = new System.Windows.Forms.Button();
             this.AccountSelector = new System.Windows.Forms.ComboBox();
             this.Button_Create_Bank_Account = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
+            this.accountBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.btnCreate = new System.Windows.Forms.Panel();
             this.Button_Create_User = new System.Windows.Forms.Button();
             this.Button_Login = new System.Windows.Forms.Button();
@@ -48,6 +56,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.StartPanel.SuspendLayout();
             this.KontonPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.accountBindingSource)).BeginInit();
             this.btnCreate.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -128,6 +138,8 @@
             // 
             // KontonPanel
             // 
+            this.KontonPanel.Controls.Add(this.dataGridView1);
+            this.KontonPanel.Controls.Add(this.button1);
             this.KontonPanel.Controls.Add(this.AccountSelector);
             this.KontonPanel.Controls.Add(this.Button_Create_Bank_Account);
             this.KontonPanel.Controls.Add(this.Button_New_Transaction);
@@ -137,6 +149,60 @@
             this.KontonPanel.Size = new System.Drawing.Size(599, 378);
             this.KontonPanel.TabIndex = 4;
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.test,
+            this.Amount,
+            this.Column1,
+            this.Column2});
+            this.dataGridView1.Location = new System.Drawing.Point(20, 139);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.Size = new System.Drawing.Size(545, 209);
+            this.dataGridView1.TabIndex = 10;
+            // 
+            // test
+            // 
+            this.test.HeaderText = "Date";
+            this.test.Name = "test";
+            this.test.ReadOnly = true;
+            this.test.Width = 125;
+            // 
+            // Amount
+            // 
+            this.Amount.HeaderText = "Amount";
+            this.Amount.Name = "Amount";
+            this.Amount.ReadOnly = true;
+            this.Amount.Width = 75;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Location";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Width = 225;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Balance";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            this.Column2.Width = 75;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(470, 25);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(113, 53);
+            this.button1.TabIndex = 9;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
             // AccountSelector
             // 
             this.AccountSelector.FormattingEnabled = true;
@@ -144,6 +210,7 @@
             this.AccountSelector.Name = "AccountSelector";
             this.AccountSelector.Size = new System.Drawing.Size(104, 23);
             this.AccountSelector.TabIndex = 8;
+            this.AccountSelector.SelectedIndexChanged += new System.EventHandler(this.AccountSelector_SelectedIndexChanged);
             // 
             // Button_Create_Bank_Account
             // 
@@ -164,6 +231,10 @@
             this.label3.Size = new System.Drawing.Size(73, 25);
             this.label3.TabIndex = 0;
             this.label3.Text = "Konton";
+            // 
+            // accountBindingSource
+            // 
+            this.accountBindingSource.DataSource = typeof(Bank.Account);
             // 
             // btnCreate
             // 
@@ -251,6 +322,8 @@
             this.StartPanel.PerformLayout();
             this.KontonPanel.ResumeLayout(false);
             this.KontonPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.accountBindingSource)).EndInit();
             this.btnCreate.ResumeLayout(false);
             this.btnCreate.PerformLayout();
             this.ResumeLayout(false);
@@ -277,5 +350,12 @@
         private Button Button_Create_User;
         private Button Button_Create_Bank_Account;
         private ComboBox AccountSelector;
+        private Button button1;
+        private DataGridView dataGridView1;
+        private BindingSource accountBindingSource;
+        private DataGridViewTextBoxColumn test;
+        private DataGridViewTextBoxColumn Amount;
+        private DataGridViewTextBoxColumn Column1;
+        private DataGridViewTextBoxColumn Column2;
     }
 }

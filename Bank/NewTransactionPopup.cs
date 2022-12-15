@@ -30,16 +30,41 @@ namespace Bank
 
         private void NewTransactionPopup_Load(object sender, EventArgs e)
         {
-            
+            Debug.WriteLine(Convert.ToString(User.Current_Bank_Account_Id));
+            MaximizeBox = false;
+            MinimizeBox= false;
             Dropdown_From_Account.Items.Clear();
             foreach (string items in User.Current_Bank_Account_Name)
             {
                 Dropdown_From_Account.Items.Add(items);
-            }
-            foreach (string items in User.Global_Bank_Account_Id)
-            {
                 Dropdown_To_Account.Items.Add(items);
             }
+            int i = 0;
+            foreach (string items in User.Global_Bank_Account_Id)
+            {
+                try
+                {
+                    if (items.Contains(Convert.ToString(User.Current_Bank_Account_Id[i])))
+                    {
+                        
+                    }
+                    else
+                    {
+                        Dropdown_To_Account.Items.Add(items);
+                    }
+                    i++;
+                }
+                catch 
+                {
+                    Dropdown_To_Account.Items.Add(items);
+                }
+                
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

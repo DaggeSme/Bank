@@ -83,6 +83,7 @@
             this.button1.TabIndex = 6;
             this.button1.Text = "Genomför transaktionen";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -115,7 +116,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.ControlBox = false;
             this.Controls.Add(this.Textbox_Amount);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -124,6 +124,7 @@
             this.Controls.Add(this.Dropdown_From_Account);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.Name = "NewTransactionPopup";
             this.Text = "NewTransactionPopup";
             this.Load += new System.EventHandler(this.NewTransactionPopup_Load);
