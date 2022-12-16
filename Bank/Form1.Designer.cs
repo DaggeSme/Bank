@@ -28,7 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.Button_Start_Page = new System.Windows.Forms.Button();
             this.Button_Account_Page = new System.Windows.Forms.Button();
             this.Button_New_Transaction = new System.Windows.Forms.Button();
@@ -37,16 +38,15 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.KontonPanel = new System.Windows.Forms.Panel();
+            this.label7 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.test = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.button1 = new System.Windows.Forms.Button();
             this.AccountSelector = new System.Windows.Forms.ComboBox();
             this.Button_Create_Bank_Account = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
-            this.accountBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.btnCreate = new System.Windows.Forms.Panel();
             this.Button_Create_User = new System.Windows.Forms.Button();
             this.Button_Login = new System.Windows.Forms.Button();
@@ -57,7 +57,6 @@
             this.StartPanel.SuspendLayout();
             this.KontonPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.accountBindingSource)).BeginInit();
             this.btnCreate.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -85,7 +84,7 @@
             // 
             // Button_New_Transaction
             // 
-            this.Button_New_Transaction.Location = new System.Drawing.Point(123, 22);
+            this.Button_New_Transaction.Location = new System.Drawing.Point(239, 53);
             this.Button_New_Transaction.Name = "Button_New_Transaction";
             this.Button_New_Transaction.Size = new System.Drawing.Size(96, 25);
             this.Button_New_Transaction.TabIndex = 2;
@@ -99,9 +98,9 @@
             this.StartPanel.Controls.Add(this.label4);
             this.StartPanel.Controls.Add(this.label2);
             this.StartPanel.Controls.Add(this.label1);
-            this.StartPanel.Location = new System.Drawing.Point(646, 427);
+            this.StartPanel.Location = new System.Drawing.Point(12, 43);
             this.StartPanel.Name = "StartPanel";
-            this.StartPanel.Size = new System.Drawing.Size(599, 378);
+            this.StartPanel.Size = new System.Drawing.Size(600, 378);
             this.StartPanel.TabIndex = 3;
             // 
             // label4
@@ -138,31 +137,63 @@
             // 
             // KontonPanel
             // 
+            this.KontonPanel.Controls.Add(this.label7);
             this.KontonPanel.Controls.Add(this.dataGridView1);
-            this.KontonPanel.Controls.Add(this.button1);
             this.KontonPanel.Controls.Add(this.AccountSelector);
             this.KontonPanel.Controls.Add(this.Button_Create_Bank_Account);
             this.KontonPanel.Controls.Add(this.Button_New_Transaction);
             this.KontonPanel.Controls.Add(this.label3);
             this.KontonPanel.Location = new System.Drawing.Point(12, 43);
             this.KontonPanel.Name = "KontonPanel";
-            this.KontonPanel.Size = new System.Drawing.Size(599, 378);
+            this.KontonPanel.Size = new System.Drawing.Size(600, 378);
             this.KontonPanel.TabIndex = 4;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label7.Location = new System.Drawing.Point(20, 98);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(302, 21);
+            this.label7.TabIndex = 8;
+            this.label7.Text = "Välj ett konto för att visa alla transaktioner";
             // 
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.test,
             this.Amount,
             this.Column1,
             this.Column2});
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.Location = new System.Drawing.Point(20, 139);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(545, 209);
+            this.dataGridView1.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.dataGridView1.RowHeadersWidth = 4;
+            this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.dataGridView1.Size = new System.Drawing.Size(506, 195);
             this.dataGridView1.TabIndex = 10;
             // 
             // test
@@ -170,6 +201,7 @@
             this.test.HeaderText = "Date";
             this.test.Name = "test";
             this.test.ReadOnly = true;
+            this.test.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.test.Width = 125;
             // 
             // Amount
@@ -177,6 +209,7 @@
             this.Amount.HeaderText = "Amount";
             this.Amount.Name = "Amount";
             this.Amount.ReadOnly = true;
+            this.Amount.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.Amount.Width = 75;
             // 
             // Column1
@@ -184,6 +217,7 @@
             this.Column1.HeaderText = "Location";
             this.Column1.Name = "Column1";
             this.Column1.ReadOnly = true;
+            this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.Column1.Width = 225;
             // 
             // Column2
@@ -191,30 +225,22 @@
             this.Column2.HeaderText = "Balance";
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;
+            this.Column2.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.Column2.Width = 75;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(470, 25);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(113, 53);
-            this.button1.TabIndex = 9;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // AccountSelector
             // 
             this.AccountSelector.FormattingEnabled = true;
-            this.AccountSelector.Location = new System.Drawing.Point(314, 51);
+            this.AccountSelector.Location = new System.Drawing.Point(20, 55);
             this.AccountSelector.Name = "AccountSelector";
             this.AccountSelector.Size = new System.Drawing.Size(104, 23);
             this.AccountSelector.TabIndex = 8;
+            this.AccountSelector.Text = "Välj";
             this.AccountSelector.SelectedIndexChanged += new System.EventHandler(this.AccountSelector_SelectedIndexChanged);
             // 
             // Button_Create_Bank_Account
             // 
-            this.Button_Create_Bank_Account.Location = new System.Drawing.Point(123, 53);
+            this.Button_Create_Bank_Account.Location = new System.Drawing.Point(130, 53);
             this.Button_Create_Bank_Account.Name = "Button_Create_Bank_Account";
             this.Button_Create_Bank_Account.Size = new System.Drawing.Size(96, 25);
             this.Button_Create_Bank_Account.TabIndex = 7;
@@ -232,10 +258,6 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "Konton";
             // 
-            // accountBindingSource
-            // 
-            this.accountBindingSource.DataSource = typeof(Bank.Account);
-            // 
             // btnCreate
             // 
             this.btnCreate.Controls.Add(this.Button_Create_User);
@@ -244,9 +266,9 @@
             this.btnCreate.Controls.Add(this.Textbox_Login_Name);
             this.btnCreate.Controls.Add(this.label6);
             this.btnCreate.Controls.Add(this.label5);
-            this.btnCreate.Location = new System.Drawing.Point(646, 46);
+            this.btnCreate.Location = new System.Drawing.Point(12, 43);
             this.btnCreate.Name = "btnCreate";
-            this.btnCreate.Size = new System.Drawing.Size(599, 375);
+            this.btnCreate.Size = new System.Drawing.Size(600, 378);
             this.btnCreate.TabIndex = 5;
             // 
             // Button_Create_User
@@ -309,7 +331,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1257, 744);
+            this.ClientSize = new System.Drawing.Size(620, 430);
             this.Controls.Add(this.btnCreate);
             this.Controls.Add(this.StartPanel);
             this.Controls.Add(this.KontonPanel);
@@ -317,13 +339,13 @@
             this.Controls.Add(this.Button_Account_Page);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Bank";
             this.StartPanel.ResumeLayout(false);
             this.StartPanel.PerformLayout();
             this.KontonPanel.ResumeLayout(false);
             this.KontonPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.accountBindingSource)).EndInit();
             this.btnCreate.ResumeLayout(false);
             this.btnCreate.PerformLayout();
             this.ResumeLayout(false);
@@ -350,12 +372,11 @@
         private Button Button_Create_User;
         private Button Button_Create_Bank_Account;
         private ComboBox AccountSelector;
-        private Button button1;
         private DataGridView dataGridView1;
-        private BindingSource accountBindingSource;
         private DataGridViewTextBoxColumn test;
         private DataGridViewTextBoxColumn Amount;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn Column2;
+        private Label label7;
     }
 }

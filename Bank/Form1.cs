@@ -142,26 +142,24 @@ namespace Bank
 
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
-        {
-            Utility.ReadTransactions("d37e16b0-76db-42a7-a808-43c8f3df7dc3");
-            foreach (double item in Account.Balance)
-            {
-
-                Debug.WriteLine(item);
-            }
-        }
-
         private void AccountSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
-            dataGridView1.Rows.Clear();
-            Utility.ReadBankAccount(User.Current_User_Id);
-            Utility.ReadTransactions(User.Current_Bank_Account_Id[User.Current_Bank_Account_Name.IndexOf(AccountSelector.Text)]);
-            for (int i = 0; i <= Account.Balance.Count - 1; i++)
+            try
             {
-                dataGridView1.Rows.Add(Account.Date[i], Account.Amount[i], Account.Location[i], Account.Balance[i]);
+                dataGridView1.Rows.Clear();
+                Utility.ReadBankAccount(User.Current_User_Id);
+                Utility.ReadTransactions(User.Current_Bank_Account_Id[User.Current_Bank_Account_Name.IndexOf(AccountSelector.Text)]);
+                for (int i = 0; i <= Account.Balance.Count - 1; i++)
+                {
+                    dataGridView1.Rows.Insert(0, Account.Date[i], Account.Amount[i], Account.Location[i], Account.Balance[i]);
+                }
+                dataGridView1.Update();
             }
-            dataGridView1.Update();
+            catch
+            {
+                MessageBox.Show("Detta kontot har inte några transaktioner ännu", "Fel!");
+            }
+            
         }
     }
     public class User
@@ -397,29 +395,25 @@ namespace Bank
             Account.Date = new List<string>(XDocument.Load(path).Descendants("Transaction").Descendants("Date").Select(element => element.Value).ToArray());
             Account.Amount = new List<string>(XDocument.Load(path).Descendants("Transaction").Descendants("Amount").Select(element => element.Value).ToArray());
             Account.Direction = new List<string>(XDocument.Load(path).Descendants("Transaction").Descendants("Direction").Select(element => element.Value).ToArray());
+            double tempsum = 1000;
             for (int i = 0; i <= Account.Amount.Count - 1; i++)
             {
-                double tempsum = 1000;
-                for (int j = 0; j <= i; j++)
+                if (Convert.ToString(Account.Direction[i]) == "In")
                 {
-                    if (Convert.ToString(Account.Direction[j]) == "In")
-                        tempsum += Convert.ToDouble(Account.Amount[j]);
-                    else
-                        tempsum -= Convert.ToDouble(Account.Amount[j]);
+                    tempsum += Convert.ToDouble(Account.Amount[i]);
+                    Account.Amount[i] = "+" + Account.Amount[i];
+                }
+                else
+                {
+                    tempsum -= Convert.ToDouble(Account.Amount[i]);
+                    Account.Amount[i] = "-" + Account.Amount[i];
                 }
                 Account.Balance.Add(tempsum);
             }
             Debug.WriteLine("Done doing Balance!");
             for (int x = 0; x <= Account.Amount.Count - 1; x++)
             {
-                if (Account.Direction[x] == "In")
-                {
-                    Account.Amount[x] = "+" + Account.Amount[x];
-                }
-                else
-                {
-                    Account.Amount[x] = "-" + Account.Amount[x];
-                }
+                
             }
             Debug.WriteLine("Done doing Amount!");
 
