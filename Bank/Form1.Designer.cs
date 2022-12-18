@@ -36,28 +36,30 @@
             this.StartPanel = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.Welcome = new System.Windows.Forms.Label();
             this.KontonPanel = new System.Windows.Forms.Panel();
+            this.Saldo = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.Bank_account_View = new System.Windows.Forms.DataGridView();
             this.test = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Belopp = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AccountSelector = new System.Windows.Forms.ComboBox();
             this.Button_Create_Bank_Account = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
-            this.btnCreate = new System.Windows.Forms.Panel();
+            this.LoginPanel = new System.Windows.Forms.Panel();
             this.Button_Create_User = new System.Windows.Forms.Button();
             this.Button_Login = new System.Windows.Forms.Button();
-            this.TextBox_Login_Password = new System.Windows.Forms.TextBox();
-            this.Textbox_Login_Name = new System.Windows.Forms.TextBox();
+            this.Textbox_Login_Password = new System.Windows.Forms.TextBox();
+            this.Textbox_Login_Email = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.Button_Logout = new System.Windows.Forms.Button();
             this.StartPanel.SuspendLayout();
             this.KontonPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.btnCreate.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Bank_account_View)).BeginInit();
+            this.LoginPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // Button_Start_Page
@@ -69,7 +71,7 @@
             this.Button_Start_Page.Text = "Start";
             this.Button_Start_Page.UseVisualStyleBackColor = true;
             this.Button_Start_Page.Visible = false;
-            this.Button_Start_Page.Click += new System.EventHandler(this.button1_Click);
+            this.Button_Start_Page.Click += new System.EventHandler(this.Button_Start_Page_Click);
             // 
             // Button_Account_Page
             // 
@@ -90,14 +92,13 @@
             this.Button_New_Transaction.TabIndex = 2;
             this.Button_New_Transaction.Text = "Ny transaktion";
             this.Button_New_Transaction.UseVisualStyleBackColor = true;
-            this.Button_New_Transaction.Visible = false;
             this.Button_New_Transaction.Click += new System.EventHandler(this.Button_New_Transaction_Click);
             // 
             // StartPanel
             // 
             this.StartPanel.Controls.Add(this.label4);
             this.StartPanel.Controls.Add(this.label2);
-            this.StartPanel.Controls.Add(this.label1);
+            this.StartPanel.Controls.Add(this.Welcome);
             this.StartPanel.Location = new System.Drawing.Point(12, 43);
             this.StartPanel.Name = "StartPanel";
             this.StartPanel.Size = new System.Drawing.Size(600, 378);
@@ -117,28 +118,28 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label2.Location = new System.Drawing.Point(73, 86);
+            this.label2.Location = new System.Drawing.Point(87, 86);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(426, 80);
+            this.label2.Size = new System.Drawing.Size(426, 40);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Under konton kan du se alla dina konton och skapa nya konton.\r\nOm du trycker på n" +
-    "y transakrtion kan du genomföra en ny \r\ntransaktion från eller till ett av dina " +
-    "konton\r\n\r\n";
+            this.label2.Text = "Under konton kan du se alla dina konton och skapa nya konton.\r\nDär kan du även ge" +
+    "nomföra nya transaktioner om du önskar.\r\n";
             // 
-            // label1
+            // Welcome
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(128, 32);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(247, 30);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Välkommen till din bank! \r\n";
+            this.Welcome.AutoSize = true;
+            this.Welcome.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Welcome.Location = new System.Drawing.Point(88, 45);
+            this.Welcome.Name = "Welcome";
+            this.Welcome.Size = new System.Drawing.Size(247, 30);
+            this.Welcome.TabIndex = 0;
+            this.Welcome.Text = "Välkommen till din bank! \r\n";
             // 
             // KontonPanel
             // 
+            this.KontonPanel.Controls.Add(this.Saldo);
             this.KontonPanel.Controls.Add(this.label7);
-            this.KontonPanel.Controls.Add(this.dataGridView1);
+            this.KontonPanel.Controls.Add(this.Bank_account_View);
             this.KontonPanel.Controls.Add(this.AccountSelector);
             this.KontonPanel.Controls.Add(this.Button_Create_Bank_Account);
             this.KontonPanel.Controls.Add(this.Button_New_Transaction);
@@ -148,26 +149,35 @@
             this.KontonPanel.Size = new System.Drawing.Size(600, 378);
             this.KontonPanel.TabIndex = 4;
             // 
+            // Saldo
+            // 
+            this.Saldo.AutoSize = true;
+            this.Saldo.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Saldo.Location = new System.Drawing.Point(20, 115);
+            this.Saldo.Name = "Saldo";
+            this.Saldo.Size = new System.Drawing.Size(0, 21);
+            this.Saldo.TabIndex = 11;
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label7.Location = new System.Drawing.Point(20, 98);
+            this.label7.Location = new System.Drawing.Point(20, 81);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(302, 21);
+            this.label7.Size = new System.Drawing.Size(336, 21);
             this.label7.TabIndex = 8;
-            this.label7.Text = "Välj ett konto för att visa alla transaktioner";
+            this.label7.Text = "Välj ett bankkonto för att visa alla transaktioner";
             // 
-            // dataGridView1
+            // Bank_account_View
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.dataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Bank_account_View.AllowUserToAddRows = false;
+            this.Bank_account_View.AllowUserToDeleteRows = false;
+            this.Bank_account_View.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.Bank_account_View.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            this.Bank_account_View.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.Bank_account_View.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.test,
-            this.Amount,
+            this.Belopp,
             this.Column1,
             this.Column2});
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -177,11 +187,11 @@
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridView1.Location = new System.Drawing.Point(20, 139);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            this.Bank_account_View.DefaultCellStyle = dataGridViewCellStyle1;
+            this.Bank_account_View.Location = new System.Drawing.Point(20, 139);
+            this.Bank_account_View.Name = "Bank_account_View";
+            this.Bank_account_View.ReadOnly = true;
+            this.Bank_account_View.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -189,32 +199,32 @@
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.dataGridView1.RowHeadersWidth = 4;
-            this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dataGridView1.Size = new System.Drawing.Size(506, 195);
-            this.dataGridView1.TabIndex = 10;
+            this.Bank_account_View.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.Bank_account_View.RowHeadersWidth = 4;
+            this.Bank_account_View.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.Bank_account_View.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.Bank_account_View.Size = new System.Drawing.Size(506, 195);
+            this.Bank_account_View.TabIndex = 10;
             // 
             // test
             // 
-            this.test.HeaderText = "Date";
+            this.test.HeaderText = "Datum";
             this.test.Name = "test";
             this.test.ReadOnly = true;
             this.test.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.test.Width = 125;
             // 
-            // Amount
+            // Belopp
             // 
-            this.Amount.HeaderText = "Amount";
-            this.Amount.Name = "Amount";
-            this.Amount.ReadOnly = true;
-            this.Amount.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Amount.Width = 75;
+            this.Belopp.HeaderText = "Belopp";
+            this.Belopp.Name = "Belopp";
+            this.Belopp.ReadOnly = true;
+            this.Belopp.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Belopp.Width = 75;
             // 
             // Column1
             // 
-            this.Column1.HeaderText = "Location";
+            this.Column1.HeaderText = "Destination /Källa";
             this.Column1.Name = "Column1";
             this.Column1.ReadOnly = true;
             this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -222,7 +232,7 @@
             // 
             // Column2
             // 
-            this.Column2.HeaderText = "Balance";
+            this.Column2.HeaderText = "Summa";
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;
             this.Column2.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -258,18 +268,18 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "Konton";
             // 
-            // btnCreate
+            // LoginPanel
             // 
-            this.btnCreate.Controls.Add(this.Button_Create_User);
-            this.btnCreate.Controls.Add(this.Button_Login);
-            this.btnCreate.Controls.Add(this.TextBox_Login_Password);
-            this.btnCreate.Controls.Add(this.Textbox_Login_Name);
-            this.btnCreate.Controls.Add(this.label6);
-            this.btnCreate.Controls.Add(this.label5);
-            this.btnCreate.Location = new System.Drawing.Point(12, 43);
-            this.btnCreate.Name = "btnCreate";
-            this.btnCreate.Size = new System.Drawing.Size(600, 378);
-            this.btnCreate.TabIndex = 5;
+            this.LoginPanel.Controls.Add(this.Button_Create_User);
+            this.LoginPanel.Controls.Add(this.Button_Login);
+            this.LoginPanel.Controls.Add(this.Textbox_Login_Password);
+            this.LoginPanel.Controls.Add(this.Textbox_Login_Email);
+            this.LoginPanel.Controls.Add(this.label6);
+            this.LoginPanel.Controls.Add(this.label5);
+            this.LoginPanel.Location = new System.Drawing.Point(12, 43);
+            this.LoginPanel.Name = "LoginPanel";
+            this.LoginPanel.Size = new System.Drawing.Size(600, 378);
+            this.LoginPanel.TabIndex = 5;
             // 
             // Button_Create_User
             // 
@@ -279,7 +289,7 @@
             this.Button_Create_User.TabIndex = 7;
             this.Button_Create_User.Text = "Skapa konto";
             this.Button_Create_User.UseVisualStyleBackColor = true;
-            this.Button_Create_User.Click += new System.EventHandler(this.Button_Create_User_Click_2);
+            this.Button_Create_User.Click += new System.EventHandler(this.Button_Create_User_Click);
             // 
             // Button_Login
             // 
@@ -291,21 +301,21 @@
             this.Button_Login.UseVisualStyleBackColor = true;
             this.Button_Login.Click += new System.EventHandler(this.Button_Login_Click);
             // 
-            // TextBox_Login_Password
+            // Textbox_Login_Password
             // 
-            this.TextBox_Login_Password.Location = new System.Drawing.Point(34, 122);
-            this.TextBox_Login_Password.Name = "TextBox_Login_Password";
-            this.TextBox_Login_Password.PlaceholderText = "Lösenord";
-            this.TextBox_Login_Password.Size = new System.Drawing.Size(156, 23);
-            this.TextBox_Login_Password.TabIndex = 3;
+            this.Textbox_Login_Password.Location = new System.Drawing.Point(34, 122);
+            this.Textbox_Login_Password.Name = "Textbox_Login_Password";
+            this.Textbox_Login_Password.PlaceholderText = "Lösenord";
+            this.Textbox_Login_Password.Size = new System.Drawing.Size(156, 23);
+            this.Textbox_Login_Password.TabIndex = 3;
             // 
-            // Textbox_Login_Name
+            // Textbox_Login_Email
             // 
-            this.Textbox_Login_Name.Location = new System.Drawing.Point(34, 93);
-            this.Textbox_Login_Name.Name = "Textbox_Login_Name";
-            this.Textbox_Login_Name.PlaceholderText = "Namn";
-            this.Textbox_Login_Name.Size = new System.Drawing.Size(156, 23);
-            this.Textbox_Login_Name.TabIndex = 2;
+            this.Textbox_Login_Email.Location = new System.Drawing.Point(34, 93);
+            this.Textbox_Login_Email.Name = "Textbox_Login_Email";
+            this.Textbox_Login_Email.PlaceholderText = "Email";
+            this.Textbox_Login_Email.Size = new System.Drawing.Size(156, 23);
+            this.Textbox_Login_Email.TabIndex = 2;
             // 
             // label6
             // 
@@ -327,16 +337,28 @@
             this.label5.TabIndex = 0;
             this.label5.Text = "Välkommen!";
             // 
+            // Button_Logout
+            // 
+            this.Button_Logout.Location = new System.Drawing.Point(500, 12);
+            this.Button_Logout.Name = "Button_Logout";
+            this.Button_Logout.Size = new System.Drawing.Size(96, 25);
+            this.Button_Logout.TabIndex = 6;
+            this.Button_Logout.Text = "Logga ut";
+            this.Button_Logout.UseVisualStyleBackColor = true;
+            this.Button_Logout.Visible = false;
+            this.Button_Logout.Click += new System.EventHandler(this.Button_Logout_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(620, 430);
-            this.Controls.Add(this.btnCreate);
-            this.Controls.Add(this.StartPanel);
-            this.Controls.Add(this.KontonPanel);
+            this.ClientSize = new System.Drawing.Size(622, 432);
+            this.Controls.Add(this.Button_Logout);
             this.Controls.Add(this.Button_Start_Page);
             this.Controls.Add(this.Button_Account_Page);
+            this.Controls.Add(this.LoginPanel);
+            this.Controls.Add(this.StartPanel);
+            this.Controls.Add(this.KontonPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -345,9 +367,9 @@
             this.StartPanel.PerformLayout();
             this.KontonPanel.ResumeLayout(false);
             this.KontonPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.btnCreate.ResumeLayout(false);
-            this.btnCreate.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Bank_account_View)).EndInit();
+            this.LoginPanel.ResumeLayout(false);
+            this.LoginPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -359,24 +381,26 @@
         private Button Button_New_Transaction;
         private Panel StartPanel;
         private Label label2;
-        private Label label1;
+        private Label Welcome;
         private Panel KontonPanel;
         private Label label3;
         private Label label4;
-        private Panel btnCreate;
+        private Panel LoginPanel;
         private Button Button_Login;
-        private TextBox TextBox_Login_Password;
-        private TextBox Textbox_Login_Name;
+        private TextBox Textbox_Login_Password;
+        private TextBox Textbox_Login_Email;
         private Label label6;
         private Label label5;
         private Button Button_Create_User;
         private Button Button_Create_Bank_Account;
-        private ComboBox AccountSelector;
-        private DataGridView dataGridView1;
+        private Label label7;
         private DataGridViewTextBoxColumn test;
-        private DataGridViewTextBoxColumn Amount;
+        private DataGridViewTextBoxColumn Belopp;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn Column2;
-        private Label label7;
+        private Button Button_Logout;
+        private Label Saldo;
+        public ComboBox AccountSelector;
+        public DataGridView Bank_account_View;
     }
 }
